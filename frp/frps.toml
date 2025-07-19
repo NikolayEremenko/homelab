@@ -1,0 +1,16 @@
+# Bind address and port for frp server and client communication
+bindAddr = "0.0.0.0"
+bindPort = 7000
+
+# Token for authenticating with client
+auth.token = "{{ .Envs.FRP_AUTH_TOKEN }}"
+
+# Configuration for frp server dashboard (optional)
+webServer.addr = "0.0.0.0"
+webServer.port = 7500
+webServer.user = "admin"
+webServer.password = "{{ .Envs.FRP_DASH_PASS }}"
+
+# Ports for virtual hosts (applications running in Kubernetes)
+vhostHTTPPort = 80
+vhostHTTPSPort = 443

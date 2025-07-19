@@ -1,0 +1,27 @@
+user = "web"
+
+# Address of the frp server (taken from the environment),
+# along with its port
+serverAddr = "{{ .Envs.FRP_SERVER_ADDR }}"
+serverPort = 7000
+
+# Token for authenticating with server
+auth.token = "{{ .Envs.FRP_AUTH_TOKEN }}"
+
+# Proxy definition for 'https' traffic, with the destination
+# IP address taken from the environment
+[[proxies]]
+name = "https"
+type = "https"
+localIP = "127.0.0.1"
+localPort = 443
+customDomains = ["demothings.ru"]
+
+# Proxy definition for 'http' traffic, with the destination
+# IP address taken from the environment
+[[proxies]]
+name = "http"
+type = "http"
+localIP = "127.0.0.1"
+localPort = 80
+customDomains = ["demothings.ru"]
