@@ -1,4 +1,4 @@
-user = "web"
+user = "pve"
 
 # Address of the frp server (taken from the environment),
 # along with its port
@@ -13,6 +13,6 @@ auth.token = "{{ .Envs.FRP_AUTH_TOKEN }}"
 [[proxies]]
 name = "ssh"
 type = "tcp"
-localIP = "127.0.0.1"
+localIP = "192.168.1.11"
 localPort = 22
 remotePort = 2233

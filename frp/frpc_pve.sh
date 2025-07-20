@@ -1,7 +1,6 @@
 #!/bin/bash
 
 docker run -d --restart always --name frpc \
-    --network kind \
     -p 7000:7000 \
     -e FRP_AUTH_TOKEN \
     -e FRP_SERVER_ADDR \
