@@ -11,7 +11,7 @@ resource "proxmox_virtual_environment_file" "cloud_config" {
   source_raw {
     data = templatefile("${path.module}/templates/${each.value.role}-cloud-config.tpl", {
       hostname = each.key
-      ssh_key  = "${trimspace(data.local_file.ssh_public_key.content)}"
+      ssh_key  = trimspace(data.local_file.ssh_public_key.content)
       user     = "nere"
     })
     file_name = "${each.key}-cloud-config.yml"
@@ -23,7 +23,7 @@ resource "proxmox_virtual_environment_vm" "k3s-node" {
   name        = each.key
   node_name   = var.proxmox_pve_node_name
   description = "Managed by Terraform"
-  tags        = sort(["k3s", "node", "terraform", "${each.value.role}"])
+  tags        = sort(["k3s", "node", "terraform", each.value.role])
 
   agent {
     enabled = true

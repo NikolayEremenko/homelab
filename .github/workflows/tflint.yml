@@ -20,4 +20,4 @@ jobs:
       working-directory: ./terraform
       run: |
         tflint --init
-        tflint -f compact
+        tflint --format=compact --recursive
