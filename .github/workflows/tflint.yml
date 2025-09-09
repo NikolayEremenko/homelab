@@ -18,6 +18,6 @@ jobs:
 
     - name: Init and Run TFLint
       working-directory: ./terraform
-        run: |
-          tflint --init
-          tflint -f compact
+      run: |
+        tflint --init
+        tflint -f compact
