@@ -13,7 +13,7 @@ auth.token = "{{ .Envs.FRP_AUTH_TOKEN }}"
 [[proxies]]
 name = "https"
 type = "https"
-localIP = "127.0.0.1"
+localIP = "192.168.1.10"
 localPort = 443
 customDomains = ["demothings.ru"]
 
@@ -22,6 +22,6 @@ customDomains = ["demothings.ru"]
 [[proxies]]
 name = "http"
 type = "http"
-localIP = "127.0.0.1"
+localIP = "192.168.1.10"
 localPort = 80
 customDomains = ["demothings.ru"]
