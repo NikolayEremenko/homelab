@@ -10,9 +10,11 @@ resource "proxmox_virtual_environment_file" "cloud_config" {
 
   source_raw {
     data = templatefile("${path.module}/templates/${each.value.role}-cloud-config.tpl", {
-      hostname = each.key
-      ssh_key  = trimspace(data.local_file.ssh_public_key.content)
-      user     = "nere"
+      hostname           = each.key
+      ssh_key            = trimspace(data.local_file.ssh_public_key.content)
+      user               = "nere"
+      k3s_cluster_token  = var.k3s_cluster_token
+      k3s_server_address = trim(var.nodes["server"].ipv4_address, "/24")
     })
     file_name = "${each.key}-cloud-config.yml"
   }
@@ -56,7 +58,8 @@ resource "proxmox_virtual_environment_vm" "k3s-node" {
 
     ip_config {
       ipv4 {
-        address = "dhcp"
+        address = each.value.ipv4_address
+        gateway = "192.168.1.1"
       }
     }
 
@@ -65,5 +68,4 @@ resource "proxmox_virtual_environment_vm" "k3s-node" {
       keys     = [trimspace(data.local_file.ssh_public_key.content)]
     }
   }
-
 }

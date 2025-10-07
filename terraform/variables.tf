@@ -22,16 +22,24 @@ variable "proxmox_pve_node_name" {
   default     = "pve"
 }
 
+variable "k3s_cluster_token" {
+  description = "Env for k3s cluster toke"
+  type        = string
+  sensitive   = true
+}
+
 variable "nodes" {
   description = "Nodes configurate"
   type = map(object({
-    role   = string
-    cpu    = number
-    memory = number
-    disk   = number
+    role         = string
+    cpu          = number
+    memory       = number
+    disk         = number
+    ipv4_address = string
   }))
+
   default = {
-    "master01" = { role = "master", cpu = 2, memory = 4096, disk = 30 }
-    "worker01" = { role = "worker", cpu = 4, memory = 8096, disk = 30 }
+    "server"  = { role = "master", cpu = 2, memory = 4096, disk = 30, ipv4_address = "192.168.1.100/24" }
+    "worker1" = { role = "worker", cpu = 4, memory = 8096, disk = 30, ipv4_address = "192.168.1.101/24" }
   }
 }
