@@ -54,7 +54,7 @@ else
     echo 'source <(kubectl completion zsh)' >> ~/.kctlcomplection
     echo 'alias k=kubectl' > ~/.kctlcomplection
     echo 'source ~/.kctlcomplection' >> ~/.zshrc
-    source ~/.kctlcomplection
+    source ~/.zshrc
 
     print_status "kubectl installed successfully!"
 fi
