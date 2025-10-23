@@ -21,7 +21,7 @@ spec:
       logging:
         format: json
         level: info
-      domain: "argocd.k3s.local"
+      domain: "argocd.k3s.demothings.ru"
     
     configs:
       params:
@@ -47,9 +47,12 @@ spec:
       
       ingress:
         enabled: true
-        hostname: "argocd.k3s.local"
-        annotations: {}
+        hostname: "argocd.k3s.demothings.ru"
+        annotations:
+          spec.ingressClassName: traefik
+          cert-manager.io/cluster-issuer: acme-k3s
+          traefik.ingress.kubernetes.io/router.middlewares: default-redirect-https@kubernetescrd
         ingressClassName: traefik
         path: /
         pathType: Prefix
-        tls: false
+        tls: true
