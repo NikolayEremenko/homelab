@@ -41,5 +41,6 @@ variable "nodes" {
   default = {
     "server"  = { role = "master", cpu = 2, memory = 4096, disk = 30, ipv4_address = "192.168.1.100/24" }
     "worker1" = { role = "worker", cpu = 4, memory = 8096, disk = 30, ipv4_address = "192.168.1.101/24" }
+    "proxy"   = { role = "proxy", cpu = 1, memory = 2048, disk = 5, ipv4_address = "192.168.1.103/24" }
   }
 }

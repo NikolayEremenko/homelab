@@ -14,16 +14,16 @@ Worker - 4/8
 
 ## CertManager
 
-```shell
+```bash
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.19.1/cert-manager.yaml
 ```
 
-```shell
+```bash
 source ../../.env && envsubst < 00-certmanager.yaml | kubectl apply -f -
 ```
 
 ## Argo CD
 
-```shell
+```bash
 kubectl apply -f 01-argocd.yaml
 ```

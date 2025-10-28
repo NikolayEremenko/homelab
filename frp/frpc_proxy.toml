@@ -13,15 +13,21 @@ auth.token = "{{ .Envs.FRP_AUTH_TOKEN }}"
 [[proxies]]
 name = "https"
 type = "https"
-localIP = "192.168.1.10"
+localIP = "{{ .Envs.INGRESS_IP }}"
 localPort = 443
-customDomains = ["demothings.ru"]
+customDomains = ["demothings.ru","argocd.k3s.demothings.ru"]
+
+# Client-Server seflsigned certs for mtls
+transport.tls.enable = true
+transport.tls.certFile = "/opt/frp_certs/cert.crt"
+transport.tls.keyFile = "/opt/frp_certs/cert.key"
+transport.tls.trustedCaFile = "/opt/frp_certs/ca.crt"
 
 # Proxy definition for 'http' traffic, with the destination
 # IP address taken from the environment
-[[proxies]]
-name = "http"
-type = "http"
-localIP = "192.168.1.10"
-localPort = 80
-customDomains = ["demothings.ru"]
+# [[proxies]]
+# name = "http"
+# type = "http"
+# localIP = "{{ .Envs.INGRESS_IP }}"
+# localPort = 80
+# customDomains = ["demothings.ru"]

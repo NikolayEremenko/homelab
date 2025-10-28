@@ -8,3 +8,4 @@
 *.tfvars.json
 
 **/id_rsa
+**/frp/certs/

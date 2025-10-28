@@ -2,6 +2,18 @@ data "local_file" "ssh_public_key" {
   filename = "../keys/nere@k3s.pub"
 }
 
+data "local_file" "ca_crt" {
+  filename = "../frp/certs/ca.crt"
+}
+
+data "local_file" "cert_crt" {
+  filename = "../frp/certs/cert.crt"
+}
+
+data "local_file" "cert_key" {
+  filename = "../frp/certs/cert.key"
+}
+
 resource "proxmox_virtual_environment_file" "cloud_config" {
   for_each     = var.nodes
   content_type = "snippets"
@@ -15,6 +27,9 @@ resource "proxmox_virtual_environment_file" "cloud_config" {
       user               = "nere"
       k3s_cluster_token  = var.k3s_cluster_token
       k3s_server_address = trim(var.nodes["server"].ipv4_address, "/24")
+      ca_crt             = base64encode(data.local_file.ca_crt.content)
+      cert_crt           = base64encode(data.local_file.cert_crt.content)
+      cert_key           = base64encode(data.local_file.cert_key.content)
     })
     file_name = "${each.key}-cloud-config.yml"
   }
