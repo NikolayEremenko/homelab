@@ -13,6 +13,7 @@ package_upgrade: true
 packages:
   - qemu-guest-agent
   - net-tools
+  - iputils-ping
   - vim
   - apt-transport-https
   - ca-certificates

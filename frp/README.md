@@ -12,7 +12,7 @@ sudo wget -qO- https://gist.githubusercontent.com/NikolayEremenko/c344e0c5c3fafb
 ## Настройка клиента frp
 
 ```bash
-sudo wget -qO- https://gist.githubusercontent.com/NikolayEremenko/1112079ab282fe2dc493a01ef3b74afa/raw/97186ce338e9b30097f6415e7ee30c6c3770bfa3/run_frpc.sh | FRP_SERVER_ADDR='' FRP_AUTH_TOKEN='' FRP_ROLE='frpc_proxy' INGRESS_IP="192.168.1.100" bash
+sudo wget -qO- https://gist.githubusercontent.com/NikolayEremenko/1112079ab282fe2dc493a01ef3b74afa/raw/97186ce338e9b30097f6415e7ee30c6c3770bfa3/run_frpc.sh | FRP_SERVER_ADDR='' FRP_AUTH_TOKEN='' FRP_ROLE='frpc_proxy' INGRESS_IP="192.168.1.2" bash
 ```
 
 ## Создание сертификатов для сервера

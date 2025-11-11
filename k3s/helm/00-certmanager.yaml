@@ -6,13 +6,6 @@ metadata:
 stringData:
   acmedns.json: |
     {
-        "k3s.demothings.ru": {
-            "username": "${ACME_USERNAME}",
-            "password": "${ACME_PASSWORD}",
-            "fulldomain": "${ACME_FULLDOMAIN}",
-            "subdomain": "${ACME_SUBDOMAIN}",
-            "allowfrom": []
-        },
         "argocd.k3s.demothings.ru": {
             "username": "${ACME_USERNAME_ROOT}",
             "password": "${ACME_PASSWORD_ROOT}",

@@ -9,10 +9,10 @@ serverPort = 7000
 auth.token = "{{ .Envs.FRP_AUTH_TOKEN }}"
 
 # Client-Server seflsigned certs for mtls
-transport.tls.enable = true
-transport.tls.certFile = "/opt/frp_certs/cert.crt"
-transport.tls.keyFile = "/opt/frp_certs/cert.key"
-transport.tls.trustedCaFile = "/opt/frp_certs/ca.crt"
+# transport.tls.enable = true
+# transport.tls.certFile = "/opt/frp_certs/cert.crt"
+# transport.tls.keyFile = "/opt/frp_certs/cert.key"
+# transport.tls.trustedCaFile = "/opt/frp_certs/ca.crt"
 
 # Proxy definition for 'https' traffic, with the destination
 # IP address taken from the environment
@@ -21,7 +21,7 @@ name = "https"
 type = "https"
 localIP = "{{ .Envs.INGRESS_IP }}"
 localPort = 443
-customDomains = ["demothings.ru","argocd.k3s.demothings.ru"]
+customDomains = ["grafana.demothings.ru"]
 
 # Proxy definition for 'http' traffic, with the destination
 # IP address taken from the environment
