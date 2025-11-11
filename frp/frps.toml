@@ -16,7 +16,7 @@ webServer.password = "{{ .Envs.FRP_DASH_PASS }}"
 vhostHTTPSPort = 443
 
 # Client-Server seflsigned certs for mtls
-transport.tls.force = true
-transport.tls.certFile = "/opt/frp_certs/cert.crt"
-transport.tls.keyFile = "/opt/frp_certs/cert.key"
-transport.tls.trustedCaFile = "/opt/frp_certs/ca.crt"
+# transport.tls.force = true
+# transport.tls.certFile = "/opt/frp_certs/cert.crt"
+# transport.tls.keyFile = "/opt/frp_certs/cert.key"
+# transport.tls.trustedCaFile = "/opt/frp_certs/ca.crt"
