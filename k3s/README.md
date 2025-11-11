@@ -21,7 +21,7 @@ kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/
 ```
 
 ```bash
-source ../../.env && envsubst < 00-certmanager.yaml | kubectl apply -f -
+source ../.env && envsubst < 00-certmanager.yaml | kubectl apply -f -
 ```
 
 ## Argo CD

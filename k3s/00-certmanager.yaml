@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: acme-dns-secret
+  name: acme-dns
   namespace: cert-manager
 stringData:
   acmedns.json: |
@@ -16,7 +16,7 @@ stringData:
     }
 ---
 apiVersion: cert-manager.io/v1
-kind: Issuer
+kind: ClusterIssuer
 metadata:
   name: acme-k3s
   namespace: cert-manager
