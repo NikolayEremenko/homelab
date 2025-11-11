@@ -6,7 +6,7 @@ metadata:
 stringData:
   acmedns.json: |
     {
-        "argocd.k3s.demothings.ru": {
+        "argocd.lan.demothings.ru": {
             "username": "${ACME_USERNAME_ROOT}",
             "password": "${ACME_PASSWORD_ROOT}",
             "fulldomain": "${ACME_FULLDOMAIN_ROOT}",

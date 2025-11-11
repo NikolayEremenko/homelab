@@ -1,14 +1,16 @@
 # Домашний тестовый k3s кластер
 
-Под капотом:
-Mini PC: Beelink - AMD Ryzen 7 6800U 8CPU/24RAM
+# Установка k3s
 
-Proxmox кластер с виртуалками под k3s
+## Master
+```bash
+curl -sfL https://get.k3s.io | K3S_TOKEN=${k3s_cluster_token} sh -s
+```
 
-Nodes - cpu/mem
-
-Master - 2/4
-Worker - 4/8
+## Worker
+```bash
+curl -sfL https://get.k3s.io | K3S_URL=https://${k3s_server_address}:6443 K3S_TOKEN=${k3s_cluster_token} sh -s - agent
+```
 
 # Основные приложения
 

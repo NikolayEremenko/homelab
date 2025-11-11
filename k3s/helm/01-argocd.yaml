@@ -21,7 +21,7 @@ spec:
       logging:
         format: json
         level: info
-      domain: "argocd.k3s.demothings.ru"
+      domain: "argocd.lan.demothings.ru"
     
     configs:
       params:
@@ -47,7 +47,7 @@ spec:
       
       ingress:
         enabled: true
-        hostname: "argocd.k3s.demothings.ru"
+        hostname: "argocd.lan.demothings.ru"
         annotations:
           spec.ingressClassName: traefik
           cert-manager.io/cluster-issuer: acme-k3s
