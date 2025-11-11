@@ -2,7 +2,7 @@ user = "proxy"
 
 # Address of the frp server (taken from the environment),
 # along with its port
-serverAddr = "{{ .Envs.FRP_SERVER_ADDR }}"
+serverAddr = "176.108.248.78"
 serverPort = 7000
 
 # Token for authenticating with server
@@ -19,7 +19,7 @@ auth.token = "{{ .Envs.FRP_AUTH_TOKEN }}"
 [[proxies]]
 name = "https"
 type = "https"
-localIP = "{{ .Envs.INGRESS_IP }}"
+localIP = "192.168.1.2"
 localPort = 443
 customDomains = ["grafana.demothings.ru"]
 

@@ -5,14 +5,14 @@
 3. Запустить на сервере:
 
 ```bash
-sudo wget -qO- https://gist.githubusercontent.com/NikolayEremenko/c344e0c5c3fafb6b0c81a06991df9e52/raw/55f63554705315e0d420f78eaeeded5ffd086380/run_frps.sh | FRP_AUTH_TOKEN='' FRP_DASH_PASS='' bash
+sudo wget -qO- https://gist.githubusercontent.com/NikolayEremenko/1112079ab282fe2dc493a01ef3b74afa/raw/64f27d39fb6a8200df87b87b091b779209af8667/run_frp.sh | FRP_AUTH_TOKEN="" FRP_DASH_PASS="" FRP_ROLE='frps' bash
 ``` 
 
 
 ## Настройка клиента frp
 
 ```bash
-sudo wget -qO- https://gist.githubusercontent.com/NikolayEremenko/1112079ab282fe2dc493a01ef3b74afa/raw/97186ce338e9b30097f6415e7ee30c6c3770bfa3/run_frpc.sh | FRP_SERVER_ADDR='' FRP_AUTH_TOKEN='' FRP_ROLE='frpc_proxy' INGRESS_IP="192.168.1.2" bash
+sudo wget -qO- https://gist.githubusercontent.com/NikolayEremenko/1112079ab282fe2dc493a01ef3b74afa/raw/64f27d39fb6a8200df87b87b091b779209af8667/run_frp.sh | FRP_SERVER_ADDR="" FRP_AUTH_TOKEN="" FRP_ROLE='frpc_proxy' INGRESS_IP="192.168.1.2" bash
 ```
 
 ## Создание сертификатов для сервера
