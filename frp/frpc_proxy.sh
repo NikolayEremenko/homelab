@@ -7,4 +7,4 @@ docker run -d --restart always --name frpc \
     -e INGRESS_IP \
     -v ./frpc_proxy.toml:/etc/frpc.toml \
     -v /opt/frp_certs/:/opt/frp_certs \
-    ghcr.io/fatedier/frpc:v0.63.0 -c /etc/frpc.toml
+    ghcr.io/fatedier/frpc:v0.68.1 -c /etc/frpc.toml

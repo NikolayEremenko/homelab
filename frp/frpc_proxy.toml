@@ -2,32 +2,30 @@ user = "proxy"
 
 # Address of the frp server (taken from the environment),
 # along with its port
-serverAddr = "176.108.248.78"
+serverAddr = "{{ .Envs.FRP_SERVER_ADDR }}"
 serverPort = 7000
 
 # Token for authenticating with server
 auth.token = "{{ .Envs.FRP_AUTH_TOKEN }}"
 
-# Client-Server seflsigned certs for mtls
-# transport.tls.enable = true
-# transport.tls.certFile = "/opt/frp_certs/cert.crt"
-# transport.tls.keyFile = "/opt/frp_certs/cert.key"
-# transport.tls.trustedCaFile = "/opt/frp_certs/ca.crt"
+# Client-Server mTLS certificates
+transport.tls.enable = true
+transport.tls.certFile = "/opt/frp_certs/frpc.crt"
+transport.tls.keyFile = "/opt/frp_certs/frpc.key"
+transport.tls.trustedCaFile = "/opt/frp_certs/ca.crt"
 
-# Proxy definition for 'https' traffic, with the destination
-# IP address taken from the environment
+# Proxy for HTTP traffic → ingress controller (port 80)
+[[proxies]]
+name = "http"
+type = "http"
+localIP = "{{ .Envs.INGRESS_IP }}"
+localPort = 80
+customDomains = ["demothings.ru"]
+
+# Proxy for HTTPS traffic → ingress controller (port 443)
 [[proxies]]
 name = "https"
 type = "https"
-localIP = "192.168.1.2"
+localIP = "{{ .Envs.INGRESS_IP }}"
 localPort = 443
 customDomains = ["grafana.demothings.ru"]
-
-# Proxy definition for 'http' traffic, with the destination
-# IP address taken from the environment
-# [[proxies]]
-# name = "http"
-# type = "http"
-# localIP = "{{ .Envs.INGRESS_IP }}"
-# localPort = 80
-# customDomains = ["demothings.ru"]

@@ -12,11 +12,11 @@ webServer.user = "frp_admin"
 webServer.password = "{{ .Envs.FRP_DASH_PASS }}"
 
 # Ports for virtual hosts (applications running in Kubernetes)
-# vhostHTTPPort = 80
+vhostHTTPPort = 80
 vhostHTTPSPort = 443
 
-# Client-Server seflsigned certs for mtls
-# transport.tls.force = true
-# transport.tls.certFile = "/opt/frp_certs/cert.crt"
-# transport.tls.keyFile = "/opt/frp_certs/cert.key"
-# transport.tls.trustedCaFile = "/opt/frp_certs/ca.crt"
+# Client-Server mTLS certificates
+transport.tls.force = true
+transport.tls.certFile = "/opt/frp_certs/frps.crt"
+transport.tls.keyFile = "/opt/frp_certs/frps.key"
+transport.tls.trustedCaFile = "/opt/frp_certs/ca.crt"

@@ -10,4 +10,4 @@ docker run -d --restart always --name frps \
     -e FRP_DASH_PASS \
     -v ./frps.toml:/etc/frps.toml \
     -v /opt/frp_certs/:/opt/frp_certs \
-    ghcr.io/fatedier/frps:v0.63.0 -c /etc/frps.toml
+    ghcr.io/fatedier/frps:v0.68.1 -c /etc/frps.toml

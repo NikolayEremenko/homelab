@@ -1,86 +1,74 @@
-## Настройка сервера frps
+## Настройка сервера frps с mTLS и дашбордом
 
-1. Зайти на сервер, создать ssh ключи, закинуть публичный ключ в гитхаб
-2. Секреты лежат в .env( FRP_AUTH_TOKEN= FRP_DASH_PASS=)
-3. Запустить на сервере:
+### 1. Генерация сертификатов (mTLS)
 
-```bash
-sudo wget -qO- https://gist.githubusercontent.com/NikolayEremenko/1112079ab282fe2dc493a01ef3b74afa/raw/64f27d39fb6a8200df87b87b091b779209af8667/run_frp.sh | FRP_AUTH_TOKEN="" FRP_DASH_PASS="" FRP_ROLE='frps' bash
-``` 
-
-
-## Настройка клиента frp
+Запустите скрипт генерации CA и сертификатов:
 
 ```bash
-sudo wget -qO- https://gist.githubusercontent.com/NikolayEremenko/1112079ab282fe2dc493a01ef3b74afa/raw/64f27d39fb6a8200df87b87b091b779209af8667/run_frp.sh | FRP_SERVER_ADDR="" FRP_AUTH_TOKEN="" FRP_ROLE='frpc_proxy' INGRESS_IP="192.168.1.2" bash
+chmod +x gen_certs.sh
+sudo ./gen_certs.sh
 ```
 
-## Создание сертификатов для сервера
+Скрипт создаст в `/opt/frp_certs/`:
+- `ca.crt` / `ca.key` — корневой CA
+- `frps.crt` / `frps.key` — сертификат сервера (для frps)
+- `frpc.crt` / `frpc.key` — сертификат клиента (для frpc)
 
-* Создаем my-openssl.cnf
-```
-cat > my-openssl.cnf << EOF
-[ ca ]
-default_ca = CA_default
+### 2. Настройка секретов
 
-[ CA_default ]
-x509_extensions = usr_cert
+Создайте файл `.env`:
 
-[ req ]
-default_bits        = 2048
-default_md          = sha256
-default_keyfile     = privkey.pem
-distinguished_name  = req_distinguished_name
-attributes          = req_attributes
-x509_extensions     = v3_ca
-string_mask         = utf8only
-
-[ req_distinguished_name ]
-[ req_attributes ]
-
-[ usr_cert ]
-basicConstraints       = CA:FALSE
-nsComment              = "OpenSSL Generated Certificate"
-subjectKeyIdentifier   = hash
-authorityKeyIdentifier = keyid,issuer
-keyUsage               = digitalSignature, keyEncipherment
-extendedKeyUsage       = serverAuth, clientAuth
-
-[ v3_ca ]
-subjectKeyIdentifier   = hash
-authorityKeyIdentifier = keyid:always,issuer
-basicConstraints       = CA:true
-keyUsage               = digitalSignature, keyEncipherment, keyCertSign
+```bash
+cat > .env << EOF
+FRP_AUTH_TOKEN=<ваш_сложный_токен>
+FRP_DASH_PASS=<пароль_для_дашборда>
 EOF
 ```
 
-* CA certificates:
+### 3. Запуск сервера frps (mTLS + дашборд)
+
+На сервере:
+
 ```bash
-openssl genrsa -out ca.key 2048
-openssl req -x509 -new -nodes -key ca.key -subj "/CN=FRP_Root_CA" -days 5000 -out ca.crt
+sudo ./frps.sh
 ```
 
-* frp certificates:
+Порты:
+- **7000** — основной порт frp (mTLS)
+- **7500** — дашборд (`http://<IP>:7500`, логин: `frp_admin`)
+- **443** — HTTPS прокси
+- **80** — HTTP прокси (опционально, закомментирован по умолчанию)
+
+### 4. Настройка клиента frpc с mTLS
+
+Скопируйте сертификаты на клиентскую машину в `/opt/frp_certs/`:
 ```
-openssl genrsa -out cert.key 2048
-
-openssl req -new -sha256 -key cert.key \
-    -subj "/CN=client-server-cert" \
-    -config my-openssl.cnf \
-    -out cert.csr
-
-openssl x509 -req -days 365 -sha256 \
-	-in cert.csr -CA ca.crt -CAkey ca.key -CAcreateserial \
-	-extfile my-openssl.cnf \
-	-out cert.crt
+ca.crt      # общий CA для обеих сторон
+frpc.crt    # сертификат клиента (сгенерирован на сервере)
+frpc.key    # приватный ключ клиента
 ```
 
-* Смотрим информацию о сертификате
+Запустите клиента:
+
 ```bash
-openssl x509 -in cert.crt -text -noout
+sudo ./frpc_proxy.sh
 ```
 
-* Проверяем цепочку доверия
+### 5. Проверка mTLS
+
+Проверьте цепочку доверия:
 ```bash
-openssl verify -CAfile ca.crt cert.crt
+openssl verify -CAfile ca.crt frps.crt
+openssl verify -CAfile ca.crt frpc.crt
 ```
+
+Посмотрите информацию о сертификате:
+```bash
+openssl x509 -in frps.crt -text -noout
+```
+
+### 6. Дашборд
+
+Доступ к дашборду: `http://<IP_сервера>:7500`
+- Логин: `frp_admin`
+- Пароль: из переменной `FRP_DASH_PASS`
